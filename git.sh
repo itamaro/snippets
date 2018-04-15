@@ -22,3 +22,12 @@ git push origin --delete foo
 # sorted by the last commit date on the branch, from most recent to least
 for branch in $( git branch -r --merged | grep -v HEAD ); do echo -e $( git show --format="%ci %cr %an" $branch | head -n 1 ) \\t$branch; done | sort -r
 for branch in $( git branch -r --no-merged | grep -v HEAD ); do echo -e $( git show --format="%ci %cr %an" $branch | head -n 1 ) \\t$branch; done | sort -r
+
+# List blob objects over repo history sorted by size (largest to smallest) that are larger than threshold
+git rev-list --objects --all | \
+  git cat-file --batch-check='%(objecttype) %(objectname) %(objectsize) %(rest)' | \
+  awk '/^blob/ {print substr($0,6)}' | \
+  awk '$2 >= 2^20' | \
+  sort --numeric-sort -r --key=2 | \
+  cut --complement --characters=13-40 | \
+  numfmt --field=2 --to=iec-i --suffix=B --padding=7 --round=nearest
