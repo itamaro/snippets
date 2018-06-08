@@ -34,3 +34,10 @@ git rev-list --objects --all | \
   sort --numeric-sort -r --key=2 | \
   cut --complement --characters=13-40 | \
   numfmt --field=2 --to=iec-i --suffix=B --padding=7 --round=nearest
+
+# Check for uncommitted local changes
+if git diff-index --quiet HEAD --; then
+    # no local chanes
+else
+    # found local changes
+fi
