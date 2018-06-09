@@ -41,3 +41,7 @@ if git diff-index --quiet HEAD --; then
 else
     # found local changes
 fi
+
+# Get name of currently checked out branch
+git symbolic-ref HEAD  # refs/heads/master
+git symbolic-ref --short HEAD  # master
