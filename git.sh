@@ -45,3 +45,6 @@ fi
 # Get name of currently checked out branch
 git symbolic-ref HEAD  # refs/heads/master
 git symbolic-ref --short HEAD  # master
+
+# Get visual representation of how the current branch differs from "master"
+git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative master..
